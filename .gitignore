@@ -1,26 +1,36 @@
-# --- Build Artifacts ---
-# Generic build directory names
+# ==========================================
+# 1. IDE & Local Configuration (Crucial for VS)
+# ==========================================
+.vs/                         # Visual Studio local cache, solution options, and performance data
+.vs-*/                       # Versioned local VS directories
+out/                         # Default local CMake build output folder for VS
+_vcpkg/                      # Local vcpkg artifacts if embedded in repo
+vcpkg_installed/             # Cached dependencies per build profile
+hardware_connections.json    # Avoid leaking private SSH keys/connection profiles!
+out/
+
+# Other IDEs
+.idea/
+.vscode/
+
+# ==========================================
+# 2. Build & Generator Artifacts
+# ==========================================
 build/
 build-*/
 Build/
 bin/
-out/
-
-# CMake generated files
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 Makefile
 install_manifest.txt
 compile_commands.json
-
-# --- Dependency Management ---
-# vcpkg manifest and installed packages
-vcpkg_installed/
-# If you ever use FetchContent or other package managers
 _deps/
 
-# --- Compiled Binaries & Objects ---
+# ==========================================
+# 3. Compiled Binaries & Core Dumps
+# ==========================================
 *.o
 *.obj
 *.so
@@ -31,27 +41,23 @@ _deps/
 *.a
 *.lib
 
-# --- Debug/Symbol files ---
+# ==========================================
+# 4. Debugging & Performance Profiling Symbols
+# ==========================================
 *.pdb
 *.ilk
 *.dwo
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
-# --- Editor & IDE Files ---
-# JetBrains (CLion/IntelliJ)
-.idea/
-*.iws
-*.iml
-
-# VS Code
-.vscode/
-.history/
-
-# OS-Specific
+# ==========================================
+# 5. OS & Logging Garbage
+# ==========================================
 .DS_Store
 Thumbs.db
 Desktop.ini
-
-# --- Logs & Temporary Files ---
 *.log
 *.tmp
 *.bak
