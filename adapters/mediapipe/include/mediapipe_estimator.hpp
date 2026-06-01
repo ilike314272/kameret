@@ -26,13 +26,26 @@ public:
     }
 
     TrackingResult estimate(const Frame& f) override {
-        // TODO:
-        // 1. Wrap f.data in a cv::Mat → ImageFrame packet
-        // 2. graph_.AddPacketToInputStream("input_video", ...)
-        // 3. Poll output stream "multi_face_landmarks"
-        // 4. Extract iris landmarks (indices 468-471 left, 473-477 right)
-        // 5. Compute iris centre, map to normalised coords
-        // 6. Return populated TrackingResult
+        // 1. After getting frame, normalize lighting
+        auto [norm_frame, brightness] = gaze::normalize_lighting(cv_mat);
+
+        // 2. Run MediaPipe → get 478 landmarks → convert to vector<gaze::Landmark>
+
+        // 3. PnP solve
+        auto cam = gaze::make_camera_matrix(cfg_.FW, cfg_.FH);
+        auto pnp = gaze::solve_pnp(lm, cam, cfg_.FW, cfg_.FH);
+        auto [plane_depth, tvec_ippe] = gaze::solve_pnp_ippe(lm, cam).value_or(...);
+
+        // 4. Ellipse gaze per eye
+        auto [ax_l, ay_l] = gaze::eye_gaze_ellipse(lm, gaze::LEFT_EYE, brightness,
+            distance_, plane_depth, cfg_);
+
+        // 5. PnP blend at edges
+        auto pnp_gaze = gaze::calculate_pnp_gaze(lm, gaze::LEFT_EYE,
+            pnp->rotation_matrix, pnp->tvec, brightness, ellipse_nd, true, FW, FH);
+
+        // 6. Blink detection
+        auto blink = gaze::detect_blink(lm, blink_state_, cfg_);
         (void)f;
         TrackingResult r; r.valid = false; return r;
     }
