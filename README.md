@@ -3,6 +3,7 @@
 > Low-latency C++23 eye-tracking framework for Linux real-time targets
 
 ![Demo](https://github.com/user-attachments/assets/0aacd914-c322-4ebf-9ed7-a70191dc3ad1)
+C++ running in WASM.
 
 ---
 
