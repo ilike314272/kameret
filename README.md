@@ -1,5 +1,7 @@
 # EyeTracker
 
+<img width="800" height="450" alt="1gaze" src="https://github.com/user-attachments/assets/0aacd914-c322-4ebf-9ed7-a70191dc3ad1" />
+
 EyeTracker is a low latency C++23 computer vision and eye-tracking framework targeting:
 
 * Linux
