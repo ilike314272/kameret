@@ -63,3 +63,4 @@ Desktop.ini
 *.bak
 *.swp
 /.vs
+/external
