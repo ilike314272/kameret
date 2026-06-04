@@ -8,6 +8,7 @@ _vcpkg/                      # Local vcpkg artifacts if embedded in repo
 vcpkg_installed/             # Cached dependencies per build profile
 hardware_connections.json    # Avoid leaking private SSH keys/connection profiles!
 out/
+*.clangd
 
 # Other IDEs
 .idea/
